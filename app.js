@@ -15,9 +15,19 @@ app.use(static(
  * 使用ctx.body解析中间件
  */
 app.use(koaBody({
+    jsonLimit: '50mb',
+    formLimit: '50mb',
     multipart: true,
+    queryString: {
+        arrayLimit: 10000, //数组
+        parameterLimit: 100000000000000
+    },
     formidable: {
-        maxFileSize: 200 * 1024 * 1024 // 设置上传文件大小最大限制，默认2M
+        //   uploadDir: Path.join(__dirname, '../uploads'),
+        keepExtensions: true
+    },
+    onerror: function (err, ctx) {
+        ctx.throw('body parse error', 422);
     }
 }))
 
