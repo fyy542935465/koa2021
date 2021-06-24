@@ -43,7 +43,7 @@ module.exports = (router) => {
      * 文件上传
      */
     router.post('/upload', async (ctx, next) => {
-        const root = '/var/www/public/upload/img/'
+        const root = '/var/www/public/upload/img'
         // 上传单个文件
         const file = ctx.request.files.file; // 获取上传文件
         // 创建可读流
