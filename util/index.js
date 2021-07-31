@@ -22,13 +22,13 @@ class Util{
         const file = ctx.request.files.file; // 获取上传文件
         // 创建可读流
         const reader = fs.createReadStream(file.path);
-        let filePath = root + `/${new Date().getTime() + '.' + file.name.split('.')[1]}`;
-        console.log(filePath)
+        let imgPath = `/${new Date().getTime() + '.' + file.name.split('.')[1]}`
+        let filePath = root + imgPath
         // 创建可写流
         const upStream = fs.createWriteStream(filePath);
         // 可读流通过管道写入可写流
         reader.pipe(upStream)
-        return filePath
+        return imgPath
     }
 }
 
