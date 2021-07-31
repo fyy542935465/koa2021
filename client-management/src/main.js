@@ -6,8 +6,10 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueParticles from 'vue-particles'
-import api from  '../api'
+import api from  './config/api'
+import http from './util'
 Vue.prototype.api = api 
+Vue.prototype.$http = http 
 Vue.use(VueParticles)
 Vue.use(ElementUI);
 

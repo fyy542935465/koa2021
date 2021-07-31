@@ -69,9 +69,9 @@ export default {
       forms.append("title", title)
       forms.append("content", content)
 
-      this.$http.post(this.api.saveProduct, forms, configs).then((res) => {
-        console.log(res);
-      });
+      this.$http.post(this.api.saveProduct, forms, (res) => {
+        console.log(res)
+      },configs)
     },
     select() {
       document.getElementById("fileInput").click();
