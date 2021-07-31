@@ -5,6 +5,6 @@ export default{
     },
     PRO:{
         baseUrl:'http://121.5.228.80:9800',
-        globalImg:'http://127.0.0.1:8001'
+        globalImg:'http://121.5.228.80:8001'
     }
 }
