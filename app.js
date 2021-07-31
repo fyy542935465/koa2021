@@ -2,11 +2,12 @@ const Koa = require('koa')
 const path = require('path')
 const static = require('koa-static')
 const koaBody = require('koa-body')
+const cors = require('koa2-cors');
 const app = new Koa()
 /**
  * 静态资源目录
  */
-const staticPath = './static'
+const staticPath = './client-management/dist/'
 app.use(static(
     path.join(__dirname, staticPath)
 ))
@@ -35,12 +36,13 @@ app.use(koaBody({
  * 中间件
  */
 require('./middleware')(app)
+app.use(cors());
 
 /**
  * router
  */
 require('./router')(app)
 
-app.listen(3000, () => {
-    console.log('Server started on http://localhost:3000');
+app.listen(9800, () => {
+    console.log('Server started on http://localhost:9800');
 })

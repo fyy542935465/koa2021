@@ -1,0 +1,68 @@
+<template>
+    <el-table :data="tableData" border style="width: 100%">
+      <el-table-column prop="img" label="缩略图" width="180">
+        <template slot-scope="scope">
+          <div>
+            <img :src="scope.row.img" class="img" />
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="title" label="标题" width="180">
+      </el-table-column>
+      <el-table-column prop="date" label="日期">
+      </el-table-column>
+      <el-table-column width="100">
+        <template slot="header" slot-scope="scope">
+          <el-button size="mini" type="text">添加</el-button>
+        </template>
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
+          <el-button type="text" size="small" class="danger" @click="del(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </template>
+  
+  <script>
+    export default {
+      methods: {
+        edit(row) {
+          console.log(row);
+        },
+        del(row) {
+          console.log(row);
+          this.$confirm('确定删除指定记录?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+              
+          }).catch(() => {});
+        }
+      },
+  
+      data() {
+        return {
+          tableData: [{
+            img: 'https://image-static.segmentfault.com/370/990/3709906076-5d6cc8c29d689_fix732',
+            date: '2016-05-02',
+            title: '标题1',
+          }]
+        }
+      }
+    }
+  
+  </script>
+  
+  <style lang="scss" scoped>
+    .img {
+      width: 100px;
+      height: 50px;
+    }
+  
+    .el-button.danger {
+      color: #f56c6c;
+    }
+  
+  </style>
+  

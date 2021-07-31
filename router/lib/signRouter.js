@@ -1,40 +1,27 @@
 const path = require('path')
 const fs = require('fs')
-const User = require('../../model/index')
+const User = require('../../model/lib/sign')
 const Util = require('../../util')
 module.exports = (router) => {
     /** 
      * 
-     * 添加客户
+     * 登录
      */
-    router.post('/addUser', async (ctx, next) => {
+    router.post('/sign', async (ctx, next) => {
         let params = ctx.body || ctx.request.body
-        // 判断手机号是否已存在
-        let data = await User.findByTel(params.tel)
+        // 查询
+        let data = await User.find(params.account)
         if (data) {
-            Util.fail('手机号已存在，请确认', ctx)
-            return
-        }
-
-        // 添加客户
-        let res = await User.addUser(params.userName, params.tel)
-        if (res.id) {
-            Util.success({}, ctx)
-        } else {
-            Util.fail('添加失败', ctx)
-        }
-    })
-
-    /** 
-     * 
-     * 查询所有客户
-     */
-    router.get('/find', async (ctx, next) => {
-        let res = await User.findAll()
-        if (res) {
-            Util.success(res, ctx)
-        } else {
-            Util.fail('查询失败', ctx)
+            if(data.password === params.password){
+                Util.success({
+                    id:data.id,
+                    account:data.account
+                }, ctx)
+            }else{
+                Util.fail('密码错误', ctx)
+            }
+        }else{
+            Util.fail('账号不存在', ctx)
         }
     })
 
