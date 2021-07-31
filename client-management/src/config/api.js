@@ -1,4 +1,4 @@
-import ENV from '../../env'
+import ENV from '../../../env'
 import CONFIG from './index'
 console.log(ENV)
 const CURRENT = CONFIG[ENV.CURRENT]
