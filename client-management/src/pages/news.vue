@@ -1,15 +1,15 @@
 <template>
   <el-table :data="tableData" border style="width: 100%">
-    <el-table-column prop="img" label="缩略图" width="180">
+    <el-table-column prop="img_url" label="缩略图" width="180">
       <template slot-scope="scope">
         <div>
-          <img :src="scope.row.img" class="img" />
+          <img :src="$globalImg + scope.row.img_url" class="img" />
         </div>
       </template>
     </el-table-column>
     <el-table-column prop="title" label="标题" width="180">
     </el-table-column>
-    <el-table-column prop="date" label="日期">
+    <el-table-column prop="create_date" label="日期">
     </el-table-column>
     <el-table-column width="100">
       <template slot="header" slot-scope="scope">
@@ -25,9 +25,23 @@
 
 <script>
   export default {
+    data() {
+      return {
+        tableData: []
+      }
+    },
+    mounted() {
+      this.getData()
+    },
     methods: {
+      getData(){
+        this.$http.get(this.api.getProduct,{},res => {
+          this.tableData = res.data
+        })
+      },
       edit(row) {
         console.log(row);
+        this.$router.push(`/editor?id=${row.id}&type=1`)
       },
       del(row) {
         console.log(row);
@@ -40,16 +54,6 @@
         }).catch(() => {});
       }
     },
-
-    data() {
-      return {
-        tableData: [{
-          img: 'https://image-static.segmentfault.com/370/990/3709906076-5d6cc8c29d689_fix732',
-          date: '2016-05-02',
-          title: '标题1',
-        }]
-      }
-    }
   }
 
 </script>

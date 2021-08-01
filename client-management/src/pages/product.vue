@@ -41,6 +41,7 @@
         },
         edit(row) {
           console.log(row);
+          this.$router.push(`/editor?id=${row.id}&type=1`)
         },
         del(row) {
           console.log(row);
