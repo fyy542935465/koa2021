@@ -5,7 +5,7 @@
     </div>
     <div class="upload-img" v-show="type != 3">
       <div class="img-wrapper">
-        <img :src="$globalImg + tempImg" alt="" v-show="tempImg" />
+        <img :src="tempImg" alt="" v-show="tempImg" />
         <div class="del" @click="delImg"><span>×</span></div>
       </div>
       <el-button type="primary" @click="select">上传展示图</el-button>
@@ -62,14 +62,15 @@
         this.$http.get(url,{},res => {
           res = res.data
           this.title = res.title
-          this.tempImg = res.img_url
+          this.fileObj = res.img_url
+          this.tempImg = this.$globalImg + res.img_url
           this.editor.txt.html(res.content)
           console.log(res)
         })
       },
       save() {
         if (this.type != 3) {
-          if (!this.tempImg) {
+          if (!this.fileObj) {
             this.$message({
               message: "请上传展示图",
               type: "warning",
@@ -77,10 +78,10 @@
             return;
           }
         }
-        let title = this.title;
-        let content = this.editor.txt.html();
-        let file = this.fileObj || this.tempImg;
-        let forms = new FormData();
+        let title = this.title
+        let content = this.editor.txt.html()
+        let file = this.fileObj
+        let forms = new FormData()
         let configs = {
           headers: {
             "Content-Type": "multipart/form-data"
@@ -103,7 +104,17 @@
         }
 
         this.$http.post(url, forms, (res) => {
-          console.log(res)
+          switch (this.type) {
+          case '1':
+            this.$router.push('/product')
+            break
+          case '2':
+            this.$router.push('/news')
+            break
+          case '3':
+            this.$router.push('/about')
+            break
+        }
         }, configs)
       },
       select() {
@@ -112,21 +123,21 @@
       changeImage() {
         let me = this;
         let tmpFile = document.getElementById("fileInput");
-        this.fileObj = tmpFile.files[0];
+        this.fileObj = tmpFile.files[0]
         if (!/\.(jpeg|jpg|png|JPEG|JPG|PNG)$/.test(tmpFile.value)) {
-          this.value = "";
+          this.value = ""
           Util.message("图片类型必须是.jpeg,.jpg,.png中的一种");
-          return;
+          return
         }
         var reader = new FileReader();
-        reader.readAsDataURL(tmpFile.files[0]);
+        reader.readAsDataURL(tmpFile.files[0])
         reader.onload = function (e) {
-          me.tempImg = this.result;
+          me.tempImg = this.result
         };
       },
       delImg() {
-        this.tempImg = null;
-        this.fileObj = null;
+        this.tempImg = null
+        this.fileObj = null
       },
     },
   };

@@ -35,13 +35,13 @@
     },
     methods: {
       getData(){
-        this.$http.get(this.api.getProduct,{},res => {
+        this.$http.get(this.api.getNews,{},res => {
           this.tableData = res.data
         })
       },
       edit(row) {
         console.log(row);
-        this.$router.push(`/editor?id=${row.id}&type=1`)
+        this.$router.push(`/editor?id=${row.id}&type=2`)
       },
       del(row) {
         console.log(row);
@@ -50,7 +50,9 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-            
+          this.$http.post(this.api.delNewsById(row.id),{}, (res) => {
+            this.getData()
+          })
         }).catch(() => {});
       }
     },

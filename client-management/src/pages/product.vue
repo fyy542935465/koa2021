@@ -50,7 +50,9 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-              
+            this.$http.post(this.api.delProductById(row.id),{}, (res) => {
+              this.getData()
+            })
           }).catch(() => {});
         }
       },
