@@ -1,6 +1,7 @@
 <template>
     <div id="about">
-        <div>{{content}}</div>
+        <div>{{detail.title || ''}}</div>
+        <div>{{detail.content || ''}}</div>
         <div class="text-rt" >
             <el-button type="primary" @click="edit">去编辑</el-button>
         </div>
@@ -10,10 +11,19 @@
 export default {
     data(){
         return {
-            content:""
+            detail:{}
         }
     },
+    mounted() {
+        this.get()
+    },
     methods: {
+        get(){
+            this.$http.get(this.api.findAbout,{},res => {
+                this.detail = res.data || {}
+                console.log(res.data)
+            })
+        },
         edit(){
             this.$router.push('/editor?type=3')
         }

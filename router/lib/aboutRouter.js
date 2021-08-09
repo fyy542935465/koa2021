@@ -7,12 +7,11 @@ module.exports = (router) => {
      * 
      * 保存
      */
-    router.post('/about/edit', async (ctx, next) => {
+    router.post('/about/save', async (ctx, next) => {
         let params = ctx.body || ctx.request.body
-        // 添加客户
         let res = await About.find()
         if(res.length){
-            let data = await About.update(res[0].id,params.title, params.content)
+            let data = await About.update(res.id,params.title, params.content)
             if (data) {
                 Util.success({}, ctx)
             } else {

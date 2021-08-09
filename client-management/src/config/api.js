@@ -3,6 +3,7 @@ import CONFIG from './index'
 const CURRENT = CONFIG[ENV.CURRENT]
 const url = CURRENT.baseUrl
 export default {
+    sign:url + 'sign',
     // 保存产品、编辑产品
     saveProduct:url + 'product/save',
     // 获取产品列表
@@ -19,4 +20,8 @@ export default {
     findNewsById:(id) => url + 'news/findByid/' + id,
     // 根据id删除产品
     delNewsById:(id) => url + 'news/delete/' + id,
+    // 查询关于
+    findAbout:url + 'about/find',
+    // 保存关于
+    saveAbout:url + 'about/save'
 }

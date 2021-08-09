@@ -12,6 +12,7 @@ app.use(static(
     path.join(__dirname, staticPath)
 ))
 
+app.use(cors());
 /**
  * 使用ctx.body解析中间件
  */
@@ -36,7 +37,7 @@ app.use(koaBody({
  * 中间件
  */
 require('./middleware')(app)
-app.use(cors());
+
 
 /**
  * router

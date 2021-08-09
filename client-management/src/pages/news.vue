@@ -13,7 +13,7 @@
     </el-table-column>
     <el-table-column width="100">
       <template slot="header" slot-scope="scope">
-        <el-button size="mini" type="text">添加</el-button>
+        <el-button size="mini" type="text" @click="add">添加</el-button>
       </template>
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
@@ -43,6 +43,9 @@
         console.log(row);
         this.$router.push(`/editor?id=${row.id}&type=2`)
       },
+      add(){
+          this.$router.push(`/editor?type=2`)
+        },
       del(row) {
         console.log(row);
         this.$confirm('确定删除指定记录?', '提示', {

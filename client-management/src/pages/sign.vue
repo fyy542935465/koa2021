@@ -60,9 +60,20 @@ export default {
   },
   methods: {
     submitForm() {
+      let me = this
       this.$refs["signForm"].validate((valid) => {
         if (valid) {
-          this.$router.replace("/index");
+          this.$http.post(me.api.sign, {
+            account:me.ruleForm.name,
+            password:me.ruleForm.pwd
+          }, (res) => {
+            if(res.data.id){
+              localStorage.token = res.data.id
+              me.$router.replace("/index")
+            }else{
+               me.$message.error('账号密码有误')
+            }
+          })
         } else {
           console.log("error submit!!");
           return false;

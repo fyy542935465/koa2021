@@ -60,11 +60,11 @@
         }
 
         this.$http.get(url,{},res => {
-          res = res.data
-          this.title = res.title
-          this.fileObj = res.img_url
-          this.tempImg = this.$globalImg + res.img_url
-          this.editor.txt.html(res.content)
+          res = res.data || {}
+          this.title = res.title || ''
+          this.fileObj = res.img_url || ''
+          this.tempImg = res.img_url? (this.$globalImg + res.img_url) : ''
+          this.editor.txt.html(res.content || '')
           console.log(res)
         })
       },

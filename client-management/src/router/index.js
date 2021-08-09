@@ -9,7 +9,7 @@ import News from '../pages/news'
 import Editor from '../pages/editor'
 
 Vue.use(Router)
-
+  
 export default new Router({
   routes: [
     {

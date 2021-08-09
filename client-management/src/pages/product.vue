@@ -13,7 +13,7 @@
       </el-table-column>
       <el-table-column width="100">
         <template slot="header" slot-scope="scope">
-          <el-button size="mini" type="text">添加</el-button>
+          <el-button size="mini" type="text" @click="add">添加</el-button>
         </template>
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
@@ -42,6 +42,9 @@
         edit(row) {
           console.log(row);
           this.$router.push(`/editor?id=${row.id}&type=1`)
+        },
+        add(){
+          this.$router.push(`/editor?type=1`)
         },
         del(row) {
           console.log(row);
