@@ -8,10 +8,17 @@
         <img :src="tempImg" alt="" v-show="tempImg" />
         <div class="del" @click="delImg"><span>×</span></div>
       </div>
-      <el-button type="primary" @click="select">上传展示图</el-button>
+      <el-button type="primary" @click="selectImg">上传展示图</el-button>
       <input type="file" @change="changeImage" id="fileInput" style="display: none" />
     </div>
-
+    <div class="upload-img" v-show="type == 2">
+      <div class="img-wrapper">
+        <video :src="tempVideo" alt="" v-show="tempVideo" style="height:100px;" controls/>
+        <div class="del" @click="delVideo"><span>×</span></div>
+      </div>
+      <el-button type="primary" @click="selectVideo">上传视频</el-button>
+      <input type="file" @change="changeVideo" id="videoInput" style="display: none" />
+    </div>
     <div id="editor"></div>
     <div id="save">
       <el-button type="primary" @click="save">保存</el-button>
@@ -20,13 +27,14 @@
 </template>
 
 <script>
-  import E from "wangeditor";
+  import E from "wangeditor"
   export default {
     data() {
       return {
         title: "",
         content: "",
         tempImg: null,
+        tempVideo:null,
         type: 3,
       };
     },
@@ -59,11 +67,14 @@
             break
         }
 
+        if((this.type == '1' || this.type == '2') && !this.id) return
         this.$http.get(url,{},res => {
           res = res.data || {}
           this.title = res.title || ''
           this.fileObj = res.img_url || ''
+          this.videoObj = res.video_url || ''
           this.tempImg = res.img_url? (this.$globalImg + res.img_url) : ''
+          this.tempVideo = res.video_url? (this.$globalImg + res.video_url) : ''
           this.editor.txt.html(res.content || '')
           console.log(res)
         })
@@ -80,16 +91,19 @@
         }
         let title = this.title
         let content = this.editor.txt.html()
-        let file = this.fileObj
+        let imgFile = this.fileObj
         let forms = new FormData()
         let configs = {
           headers: {
             "Content-Type": "multipart/form-data"
           },
         };
-        forms.append("file", file)
+        forms.append("imgFile", imgFile)
         forms.append("title", title)
         forms.append("content", content)
+        if(this.videoObj){
+          forms.append("videoFile", this.videoObj)
+        }
         let url = ""
         switch (this.type) {
           case '1':
@@ -117,17 +131,25 @@
         }
         }, configs)
       },
-      select() {
+      selectImg() {
         document.getElementById("fileInput").click();
+      },
+      selectVideo() {
+        document.getElementById("videoInput").click();
       },
       changeImage() {
         let me = this;
         let tmpFile = document.getElementById("fileInput");
         this.fileObj = tmpFile.files[0]
         if (!/\.(jpeg|jpg|png|JPEG|JPG|PNG)$/.test(tmpFile.value)) {
-          this.value = ""
-          Util.message("图片类型必须是.jpeg,.jpg,.png中的一种");
+          tmpFile.value = ""
+          this.$message.error("图片类型必须是.jpeg,.jpg,.png中的一种");
           return
+        }
+        if (this.fileObj.size > 2 * 1024 * 1000) {
+            this.$message.error("大小不能超过2M");
+            tmpFile.value = "";
+            return
         }
         var reader = new FileReader();
         reader.readAsDataURL(tmpFile.files[0])
@@ -138,6 +160,30 @@
       delImg() {
         this.tempImg = null
         this.fileObj = null
+      },
+      changeVideo() {
+        let me = this;
+        let tmpFile = document.getElementById("videoInput");
+        this.videoObj = tmpFile.files[0]
+        if (!/\.(MP4|mp4)$/.test(tmpFile.value)) {
+          this.value = ""
+          this.$message.error("只支持mp4格式");
+          return
+        }
+        if (this.videoObj.size > 5 * 1024 * 1000) {
+            this.$message.error("大小不能超过5M");
+            tmpFile.value = "";
+            return
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(tmpFile.files[0])
+        reader.onload = function (e) {
+          me.tempVideo = this.result
+        };
+      },
+      delVideo() {
+        this.tempVideo = null
+        this.videoObj = null
       },
     },
   };
