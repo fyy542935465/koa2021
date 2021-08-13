@@ -24,7 +24,7 @@ class Util{
         if(file){
             // 创建可读流
             const reader = fs.createReadStream(file.path);
-            let imgPath = `${new Date().getTime() + '.' + file.name.split('.')[1]}`
+            let imgPath = `${new Date().getTime() + '.' + (file.name? file.name.split('.')[1] : 'png')}`
             let filePath = root + imgPath
             // 创建可写流
             const upStream = fs.createWriteStream(filePath);
