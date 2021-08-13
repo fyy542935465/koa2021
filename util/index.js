@@ -16,11 +16,11 @@ class Util{
         }
     }
 
-    upload(ctx){
+    upload(ctx,file){
         let params = ctx.body || ctx.request.body
         const root = '/var/www/public/img'
         // 上传单个文件
-        const file = ctx.request.files.file; // 获取上传文件
+        file = file || ctx.request.files.file; // 获取上传文件
         if(file){
             // 创建可读流
             const reader = fs.createReadStream(file.path);

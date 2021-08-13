@@ -8,19 +8,24 @@ module.exports = (router) => {
      */
     router.post('/news/save', async (ctx, next) => {
         let params = ctx.body || ctx.request.body
-        let filePath = Util.upload(ctx)
+        let imgPath = Util.upload(ctx,ctx.request.files.imgFile)
+        let videoPath = ""
+        if(ctx.request.files.videoFile){
+            videoPath = Util.upload(ctx,ctx.request.files.videoFile)
+        }
         // 编辑
         if (params.id) {
-            let data = await News.update(params.id, filePath, params.title,params.content)
+            let data = await News.update(params.id, imgPath,videoPath,params.title,params.content)
             if (data) {
                 Util.success({}, ctx)
             } else {
                 Util.fail('保存失败', ctx)
             }
         } else { //添加
-            let data = await News.add(filePath, params.title,params.content)
+            let data = await News.add(imgPath, videoPath,params.title,params.content)
             if (data) {
                 Util.success({}, ctx)
+
             } else {
                 Util.fail('保存失败', ctx)
             }

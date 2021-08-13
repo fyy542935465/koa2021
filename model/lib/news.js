@@ -19,6 +19,10 @@ const News = DB.define('news', {
         type: Sequelize.STRING,
         field: 'img_url',
     },
+    video_url: {
+        type: Sequelize.STRING,
+        field: 'video_url',
+    },
     content: {
         type: Sequelize.STRING,
         field: 'content',
@@ -31,11 +35,12 @@ const News = DB.define('news', {
     timestamps: false,
     freezeTableName: true,
 })
-// 添加产品
-exports.add = (img_url,title, content) => {
+// 添加
+exports.add = (img_url="",video_url="",title, content) => {
     return News.create({
         img_url,
         title,
+        video_url,
         content,
         create_date:moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
     })
@@ -44,16 +49,17 @@ exports.add = (img_url,title, content) => {
 // 查询所有
 exports.find = () => {
     return News.findAll({
-        attributes:['id','title','img_url','create_date']
+        attributes:['id','title','img_url','video_url','create_date']
     })
 }
 
-// 编辑产品
-exports.update = (id,img_url,title,content) => {
+// 编辑
+exports.update = (id,img_url="",video_url="",title,content) => {
     return News.update({
         img_url,
         title,
         content,
+        video_url,
         create_date:moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
     },{
         where:{
