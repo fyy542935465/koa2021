@@ -18,13 +18,13 @@ class Util{
 
     upload(ctx,file){
         let params = ctx.body || ctx.request.body
-        const root = '/var/www/public/img'
+        const root = '/var/www/public'
         // 上传单个文件
         file = file || ctx.request.files.file; // 获取上传文件
         if(file){
             // 创建可读流
             const reader = fs.createReadStream(file.path);
-            let imgPath = `${new Date().getTime() + '.' + file.name.split('/')[1]}`
+            let imgPath = `${new Date().getTime() + '.' + file.type.split('/')[1]}`
             let filePath = root + imgPath
             // 创建可写流
             const upStream = fs.createWriteStream(filePath);
