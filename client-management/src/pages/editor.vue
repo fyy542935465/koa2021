@@ -81,12 +81,20 @@ export default {
       // 裁剪组件的基础配置option
       option: {
         img: "", // 裁剪图片的地址
-        outputSize: 1,
-        full: false,
-        autoCrop: true,
-        fixedBox: true,
-        autoCropWidth: 300,
-        autoCropHeight: 200
+        outputSize: 1, // 裁剪生成图片的质量 0.1 - 1
+        outputType: 'png', //	裁剪生成图片的格式 jpeg || png || webp
+        canScale: true, // 图片是否允许滚轮缩放 默认true
+        autoCrop: true, // 是否默认生成截图框 默认false
+        canMove: true, //上传图片是否可以移动 默认true
+        autoCropWidth: 375, //默认生成截图框宽度	容器的80%	0~max
+        autoCropHeight: 220, //默认生成截图框高度	容器的80%	0~max
+        // fixedBox: true, // 固定截图框大小 不允许改变	false	true | false
+        fixed: true, //是否开启截图框宽高固定比例
+        original: false, // 上传图片按照原始比例渲染	false	true | false
+        infoTrue: false, // 为展示真实输出图片宽高 false 展示看到的截图框宽高	false	true | false
+        centerBox: true, // 截图框是否被限制在图片里面	false	true | false
+        canMoveBox: true, //截图框能否拖动	true	true | false
+        fixedNumber: [1, 1] // 截图框的宽高比例 [宽度, 高度]
       },
       picsList: [], //页面显示的数组
       // 防止重复提交
