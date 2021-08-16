@@ -8,7 +8,7 @@ module.exports = (router) => {
      */
     router.post('/product/save', async (ctx, next) => {
         let params = ctx.body || ctx.request.body
-        let filePath = Util.upload(ctx)
+        let filePath = Util.upload(ctx,ctx.request.files.imgFile)
         // 编辑
         if (params.id) {
             let data = await Product.update(params.id, filePath, params.title,params.content)
