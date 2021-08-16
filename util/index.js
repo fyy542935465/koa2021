@@ -18,7 +18,7 @@ class Util{
 
     upload(ctx,file){
         let params = ctx.body || ctx.request.body
-        const root = '/var/www/public'
+        const root = '/var/www/public/'
         // 上传单个文件
         file = file || ctx.request.files.file; // 获取上传文件
         if(file){
