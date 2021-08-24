@@ -36,7 +36,7 @@ app.use(koaBody({
 /**
  * 中间件
  */
-require('./middleware')(app)
+// require('./middleware')(app)
 
 
 /**
@@ -44,6 +44,6 @@ require('./middleware')(app)
  */
 require('./router')(app)
 
-app.listen(9800, () => {
-    console.log('Server started on http://localhost:9800');
+app.listen(9888, () => {
+    console.log('Server started on http://localhost:9888');
 })

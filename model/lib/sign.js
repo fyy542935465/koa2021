@@ -31,3 +31,12 @@ exports.find = (account) => {
         }
     })
 }
+
+// 根据id获取账号信息
+exports.findById = (id) => {
+    return User.findOne({
+        where:{
+            id
+        }
+    })
+}

@@ -18,10 +18,8 @@
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="finish" :loading="loading"
-          >确认</el-button
-        >
+        <el-button type="primary" @click="rotate">旋转</el-button>
+        <el-button type="primary" @click="finish" :loading="loading">确认</el-button>
       </div>
     </el-dialog>
     <div class="title">
@@ -60,6 +58,7 @@
     </div>
     <div id="editor"></div>
     <div id="save">
+      <el-button type="normal" @click="back">返回</el-button>
       <el-button type="primary" @click="save">保存</el-button>
     </div>
   </div>
@@ -144,6 +143,9 @@ export default {
         this.editor.txt.html(res.content || "");
         console.log(res);
       });
+    },
+    back(){
+      this.$router.go(-1)
     },
     save() {
       if (this.type != 3) {
@@ -263,6 +265,9 @@ export default {
     changeUpload(file) {
       this.option.img = file;
       this.dialogVisible = true;
+    },
+    rotate(){
+      this.$refs.cropper.rotateRight()
     },
     // 点击裁剪，这一步是可以拿到处理后的地址
     finish() {

@@ -32,12 +32,10 @@
             <el-input v-model="ruleForm.name"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="pwd" label-width="52px">
-            <el-input v-model="ruleForm.pwd"></el-input>
+            <el-input v-model="ruleForm.pwd" type="password"></el-input>
           </el-form-item>
           <div class="btn-wrapper">
-            <el-button type="primary" @click="submitForm" id="submit"
-              >登录</el-button
-            >
+            <el-button type="primary" @click="submitForm" id="submit">登录</el-button>
           </div>
         </el-form>
       </div>
