@@ -31,4 +31,14 @@ module.exports = (router) => {
         let data = await Customer.findAll()
         Util.success(data, ctx)
     })
+
+    /** 
+     * 
+     * 根据id删除
+     */
+     router.post('/customer/delete/:id', async (ctx, next) => {
+        let params = ctx.params || ctx.request.params
+        let res = await Customer.deleteById(params.id)
+        Util.success({}, ctx)
+    })
 }

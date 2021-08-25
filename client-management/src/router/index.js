@@ -1,12 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '../pages/index'
-import Sign from '../pages/sign'
-import About from '../pages/about'
-import Data from '../pages/data'
-import Product from '../pages/product'
-import News from '../pages/news'
-import Editor from '../pages/editor'
 
 Vue.use(Router)
   
@@ -14,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: '/sign',
-      component:Sign,
+      component:() => import('../pages/sign'),
       name:'Sign',
     },
     {
@@ -23,34 +16,34 @@ export default new Router({
     },
     {
       path:'/index',
-      component:Index,
+      component:() => import('../pages/index'),
       name:'Index',
       redirect:'/product',
       children:[
         {
           path:'/product',
           name:'Product',
-          component:Product
+          component:() => import('../pages/product')
         },
         {
           path:'/about',
           name:'About',
-          component:About
+          component:() => import('../pages/about')
         },
         {
           path:'/data',
           name:'Data',
-          component:Data
+          component:() => import('../pages/data')
         },
         {
           path:'/news',
           name:'News',
-          component:News
+          component:() => import('../pages/news')
         },
         {
           path:'/editor',
           name:'Editor',
-          component:Editor
+          component:() => import('../pages/editor')
         }
       ]
     }

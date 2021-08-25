@@ -23,5 +23,9 @@ export default {
     // 查询关于
     findAbout:url + 'about/find',
     // 保存关于
-    saveAbout:url + 'about/save'
+    saveAbout:url + 'about/save',
+    // 获取客户数据
+    getCustomerDate:url + 'customer/find',
+    // 删除客户
+    deleteCustomer:id => url + 'customer/delete/' + id
 }

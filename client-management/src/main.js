@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import ElementUI from 'element-ui'
+// import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueParticles from 'vue-particles'
 import api from './config/api'
@@ -15,7 +15,7 @@ Vue.prototype.api = api
 Vue.prototype.$http = http
 Vue.prototype.$globalImg = CURRENT.globalImg
 Vue.use(VueParticles)
-Vue.use(ElementUI);
+// Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 // 登录拦截

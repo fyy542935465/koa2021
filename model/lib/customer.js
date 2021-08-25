@@ -37,7 +37,8 @@ exports.add = (name,tel,address) => {
     return Customer.create({
         name,
         tel,
-        address
+        address,
+        create_date:moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
     })
 }
 
@@ -53,6 +54,15 @@ exports.findbyTel = (tel) => {
 // 查询所有客户
 exports.findAll = () => {
     return Customer.findAll({
-        attributes:['id','name','tel','address']
+        attributes:['id','name','tel','address','create_date']
+    })
+}
+
+// 根据id删除
+exports.deleteById = (id) => {
+    return Customer.destroy({
+        where:{
+            id
+        }
     })
 }

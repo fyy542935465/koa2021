@@ -10,7 +10,7 @@ module.exports = (router) => {
     router.post('/about/save', async (ctx, next) => {
         let params = ctx.body || ctx.request.body
         let res = await About.find()
-        if(res.length){
+        if(res){
             let data = await About.update(res.id,params.title, params.content)
             if (data) {
                 Util.success({}, ctx)

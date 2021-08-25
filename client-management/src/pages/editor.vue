@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- vueCropper 剪裁图片实现-->
-    <el-dialog title="图片剪裁" :visible.sync="dialogVisible" append-to-body>
+    <Dialog title="图片剪裁" :visible.sync="dialogVisible" append-to-body>
       <div class="cropper-content">
         <div class="cropper" style="text-align: center">
           <vueCropper
@@ -18,19 +18,19 @@
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="rotate">旋转</el-button>
-        <el-button type="primary" @click="finish" :loading="loading">确认</el-button>
+        <Button type="primary" @click="rotate">旋转</Button>
+        <Button type="primary" @click="finish" :loading="loading">确认</Button>
       </div>
-    </el-dialog>
+    </Dialog>
     <div class="title">
-      <el-input placeholder="请输入标题" v-model="title" style="width: 500px" />
+      <Input placeholder="请输入标题" v-model="title" style="width: 500px" />
     </div>
     <div class="upload-img" v-show="type != 3">
       <div class="img-wrapper">
         <img :src="tempImg" alt="" v-show="tempImg" />
         <div class="del" @click="delImg"><span>×</span></div>
       </div>
-      <el-button type="primary" @click="selectImg" v-show="!tempImg">上传展示图</el-button>
+      <Button type="primary" @click="selectImg" v-show="!tempImg">上传展示图</Button>
       <input
         type="file"
         @change="changeImage"
@@ -48,7 +48,7 @@
         />
         <div class="del" @click="delVideo"><span>×</span></div>
       </div>
-      <el-button type="primary" @click="selectVideo" v-show="!tempVideo">上传视频</el-button>
+      <Button type="primary" @click="selectVideo" v-show="!tempVideo">上传视频</Button>
       <input
         type="file"
         @change="changeVideo"
@@ -58,13 +58,18 @@
     </div>
     <div id="editor"></div>
     <div id="save">
-      <el-button type="normal" @click="back">返回</el-button>
-      <el-button type="primary" @click="save">保存</el-button>
+      <Button type="normal" @click="back">返回</Button>
+      <Button type="primary" @click="save">保存</Button>
     </div>
   </div>
 </template>
 
 <script>
+import {
+    Button,
+    Dialog,
+    Input
+} from 'element-ui'
 import E from "wangeditor";
 import { VueCropper } from "vue-cropper";
 export default {
@@ -102,6 +107,9 @@ export default {
   },
   components: {
     VueCropper,
+    Button,
+    Dialog,
+    Input
   },
   mounted() {
     /**
@@ -148,15 +156,6 @@ export default {
       this.$router.go(-1)
     },
     save() {
-      if (this.type != 3) {
-        if (!this.fileObj) {
-          this.$message({
-            message: "请上传展示图",
-            type: "warning",
-          });
-          return;
-        }
-      }
       let title = this.title;
       let content = this.editor.txt.html();
       let imgFile = this.fileObj;
@@ -166,12 +165,23 @@ export default {
           "Content-Type": "multipart/form-data",
         },
       };
-      forms.append("imgFile", imgFile);
+      if (this.type != 3) {
+        if (!this.fileObj) {
+          this.$message({
+            message: "请上传展示图",
+            type: "warning",
+          });
+          return;
+        }
+        forms.append("imgFile", imgFile);
+        if (this.videoObj) {
+          forms.append("videoFile", this.videoObj);
+        }
+      }
+      
       forms.append("title", title);
       forms.append("content", content);
-      if (this.videoObj) {
-        forms.append("videoFile", this.videoObj);
-      }
+      
       let url = "";
       switch (this.type) {
         case "1":
@@ -185,10 +195,7 @@ export default {
           break;
       }
 
-      this.$http.post(
-        url,
-        forms,
-        (res) => {
+      this.$http.post(url,forms,(res) => {
           switch (this.type) {
             case "1":
               this.$router.push("/product");
@@ -214,7 +221,6 @@ export default {
       let me = this;
       let tmpFile = this.tempImgFile = document.getElementById("fileInput");
       let files = tmpFile.files[0];
-      // this.fileObj = tmpFile.files[0]
 
       if (!/\.(jpeg|jpg|png|JPEG|JPG|PNG)$/.test(tmpFile.value)) {
         tmpFile.value = "";

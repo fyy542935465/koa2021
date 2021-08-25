@@ -1,35 +1,47 @@
 <template>
-  <el-table :data="tableData" border style="width: 100%">
-    <el-table-column prop="img_url" label="缩略图" width="180">
+  <Table :data="tableData" border style="width: 100%">
+    <TableColumn prop="img_url" label="缩略图" width="180">
       <template slot-scope="scope">
         <div>
           <img :src="$globalImg + scope.row.img_url" class="img" />
         </div>
       </template>
-    </el-table-column>
-    <el-table-column prop="title" label="标题" width="180">
-    </el-table-column>
-    <el-table-column prop="create_date" label="日期">
-    </el-table-column>
-    <el-table-column width="100">
+    </TableColumn>
+    <TableColumn prop="title" label="标题" width="180">
+    </TableColumn>
+    <TableColumn prop="create_date" label="日期">
+    </TableColumn>
+    <TableColumn width="100">
       <template slot="header" slot-scope="scope">
-        <el-button size="mini" type="text" @click="add">添加</el-button>
+        <Button size="mini" type="text" @click="add">添加</Button>
       </template>
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
-        <el-button type="text" size="small" class="danger" @click="del(scope.row)">删除</el-button>
+        <Button type="text" size="small" @click="edit(scope.row)">编辑</Button>
+        <Button type="text" size="small" class="danger" @click="del(scope.row)">删除</Button>
       </template>
-    </el-table-column>
-  </el-table>
+    </TableColumn>
+  </Table>
 </template>
 
 <script>
+  import {
+    Button,
+    Table,
+    TableColumn,
+    MessageBox
+  } from 'element-ui'
   export default {
     data() {
       return {
         tableData: []
       }
     },
+    components:{
+        Button,
+        Table,
+        TableColumn,
+        MessageBox
+      },
     mounted() {
       this.getData()
     },
@@ -48,7 +60,7 @@
         },
       del(row) {
         console.log(row);
-        this.$confirm('确定删除指定记录?', '提示', {
+        MessageBox.confirm('确定删除指定记录?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -69,7 +81,7 @@
     height: 50px;
   }
 
-  .el-button.danger {
+  .Button.danger {
     color: #f56c6c;
   }
 

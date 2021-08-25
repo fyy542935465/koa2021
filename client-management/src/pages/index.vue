@@ -1,29 +1,44 @@
 <template>
   <div class="container">
-    <el-container>
-      <el-header>后台管理</el-header>
-      <el-container>
-        <el-aside width="200px">
+    <Container class="is-vertical">
+      <Header>后台管理</Header>
+      <Container>
+        <Aside width="200px">
           <ul>
             <router-link tag="li" to="/product">产品</router-link>
             <router-link tag="li" to="/news">新闻动态</router-link>
             <router-link tag="li" to="/about">公司简介</router-link>
             <router-link tag="li" to="/data">数据</router-link>
           </ul>
-        </el-aside>
-        <el-container>
-          <el-main>
+        </Aside>
+        <Container class="is-vertical">
+          <Main>
             <router-view />
-          </el-main>
-          <el-footer>copyright@2021</el-footer>
-        </el-container>
-      </el-container>
-    </el-container>
+          </Main>
+          <Footer>copyright@2021</Footer>
+        </Container>
+      </Container>
+    </Container>
   </div>
 </template>
 
 <script>
-export default {};
+import {
+  Container,
+  Header,
+  Aside,
+  Main,
+  Footer
+} from 'element-ui'
+export default {
+  components:{
+    Container,
+    Header,
+    Aside,
+    Main,
+    Footer
+  }
+};
 </script>
 
 <style lang="scss" scope>

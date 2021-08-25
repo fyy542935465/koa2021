@@ -21,28 +21,34 @@
     <div class="sign-pop">
       <div class="tip">请登录</div>
       <div class="wrapper">
-        <el-form
+        <Form
           :model="ruleForm"
           :rules="rules"
           ref="signForm"
           label-width="100px"
           class="demo-ruleForm"
         >
-          <el-form-item label="账号" prop="name" label-width="52px">
-            <el-input v-model="ruleForm.name"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="pwd" label-width="52px">
-            <el-input v-model="ruleForm.pwd" type="password"></el-input>
-          </el-form-item>
+          <FormItem label="账号" prop="name" label-width="52px">
+            <Input v-model="ruleForm.name"></Input>
+          </FormItem>
+          <FormItem label="密码" prop="pwd" label-width="52px">
+            <Input v-model="ruleForm.pwd" type="password"></Input>
+          </FormItem>
           <div class="btn-wrapper">
-            <el-button type="primary" @click="submitForm" id="submit">登录</el-button>
+            <Button type="primary" @click="submitForm" id="submit">登录</Button>
           </div>
-        </el-form>
+        </Form>
       </div>
     </div>
   </div>
 </template>
 <script>
+  import {
+    Button,
+    Input,
+    Form,
+    FormItem
+  } from 'element-ui'
 export default {
   data() {
     return {
@@ -55,6 +61,12 @@ export default {
         pwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
       },
     };
+  },
+  components:{
+    Button,
+    Input,
+    Form,
+    FormItem
   },
   methods: {
     submitForm() {
