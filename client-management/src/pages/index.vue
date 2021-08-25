@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Container class="is-vertical">
-      <Header>后台管理</Header>
+      <Header>后台管理 <div class="lft">欢迎，管理员  <span @click="logout">退出</span></div></Header>
       <Container>
         <Aside width="200px">
           <ul>
@@ -37,7 +37,13 @@ export default {
     Aside,
     Main,
     Footer
-  }
+  },
+  methods: {
+    logout(){
+      localStorage.token = ''
+      this.$router.replace('/sign')
+    }
+  },
 };
 </script>
 
@@ -46,6 +52,13 @@ header{
   background: rgba(0, 0, 0, 0.85);
   color: #fff;
   line-height: 60px;
+  .lft{
+    float: right;
+    span{
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  }
 }
 .container {
   position: fixed;
